@@ -7,13 +7,18 @@ uis.directive('uiSelectChoices',
     require: '^uiSelect',
     replace: true,
     transclude: true,
-    templateUrl: function(tElement) {
+    templateUrl: function(tElement, tAttrs) {
       // Needed so the uiSelect can detect the transcluded content
       tElement.addClass('ui-select-choices');
 
-      // Gets theme attribute from parent (ui-select)
-      var theme = tElement.parent().attr('theme') || uiSelectConfig.theme;
-      return theme + '/choices.tpl.html';
+      if(tAttrs.templateUrl) {
+        // templateUrl is used for overriding directives template 
+        return tAttrs.templateUrl;
+      } else {
+        // Gets theme attribute from parent (ui-select)
+        var theme = tElement.parent().attr('theme') || uiSelectConfig.theme;
+        return theme + '/choices.tpl.html';
+      }
     },
 
     compile: function(tElement, tAttrs) {
